@@ -42,6 +42,15 @@
 
         <!-- Scripting dependency scopes - default to test -->
         <scripting.scope>test</scripting.scope>
+
+        <!-- Connector dependency scopes - default to test -->
+        <connector.mariadb.scope>test</connector.mariadb.scope>
+        <connector.mysql.scope>test</connector.mysql.scope>
+        <connector.postgres.scope>test</connector.postgres.scope>
+        <connector.mongodb.scope>test</connector.mongodb.scope>
+        <connector.sqlserver.scope>test</connector.sqlserver.scope>
+        <connector.oracle.scope>test</connector.oracle.scope>
+        <connector.db2.scope>test</connector.db2.scope>
     </properties>
 
     <dependencies>
@@ -169,6 +178,50 @@
             <groupId>io.debezium</groupId>
             <artifactId>debezium-storage-chronicle-queue</artifactId>
             <scope>${storage.chronicle-queue.scope}</scope>
+        </dependency>
+
+        <!-- Connector dependencies with property-controlled scopes -->
+        <dependency>
+            <groupId>io.debezium.quarkus</groupId>
+            <artifactId>debezium-quarkus-mariadb</artifactId>
+            <version>${project.version}</version>
+            <scope>${connector.mariadb.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.debezium.quarkus</groupId>
+            <artifactId>debezium-quarkus-mysql</artifactId>
+            <version>${project.version}</version>
+            <scope>${connector.mysql.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.debezium.quarkus</groupId>
+            <artifactId>debezium-quarkus-postgres</artifactId>
+            <version>${project.version}</version>
+            <scope>${connector.postgres.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.debezium.quarkus</groupId>
+            <artifactId>debezium-quarkus-mongodb</artifactId>
+            <version>${project.version}</version>
+            <scope>${connector.mongodb.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.debezium.quarkus</groupId>
+            <artifactId>debezium-quarkus-sqlserver</artifactId>
+            <version>${project.version}</version>
+            <scope>${connector.sqlserver.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.debezium.quarkus</groupId>
+            <artifactId>debezium-quarkus-oracle</artifactId>
+            <version>${project.version}</version>
+            <scope>${connector.oracle.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.debezium.quarkus</groupId>
+            <artifactId>debezium-quarkus-db2</artifactId>
+            <version>${project.version}</version>
+            <scope>${connector.db2.scope}</scope>
         </dependency>
     </dependencies>
     <build>
@@ -379,6 +432,56 @@
             </properties>
         </profile>
 
+        <!-- Individual connector profiles - override scope to compile -->
+        <profile>
+            <id>connector-mariadb</id>
+            <properties>
+                <connector.mariadb.scope>compile</connector.mariadb.scope>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>connector-mysql</id>
+            <properties>
+                <connector.mysql.scope>compile</connector.mysql.scope>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>connector-postgres</id>
+            <properties>
+                <connector.postgres.scope>compile</connector.postgres.scope>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>connector-mongodb</id>
+            <properties>
+                <connector.mongodb.scope>compile</connector.mongodb.scope>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>connector-sqlserver</id>
+            <properties>
+                <connector.sqlserver.scope>compile</connector.sqlserver.scope>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>connector-oracle</id>
+            <properties>
+                <connector.oracle.scope>compile</connector.oracle.scope>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>connector-db2</id>
+            <properties>
+                <connector.db2.scope>compile</connector.db2.scope>
+            </properties>
+        </profile>
+
         <profile>
             <id>assembly</id>
             <activation>
@@ -387,6 +490,13 @@
             <properties>
                 <storage.chronicle-queue.scope>compile</storage.chronicle-queue.scope>
                 <scripting.scope>compile</scripting.scope>
+                <connector.mariadb.scope>compile</connector.mariadb.scope>
+                <connector.mysql.scope>compile</connector.mysql.scope>
+                <connector.postgres.scope>compile</connector.postgres.scope>
+                <connector.mongodb.scope>compile</connector.mongodb.scope>
+                <connector.sqlserver.scope>compile</connector.sqlserver.scope>
+                <connector.oracle.scope>compile</connector.oracle.scope>
+                <connector.db2.scope>compile</connector.db2.scope>
             </properties>
             <dependencies>
                 <dependency>
@@ -396,41 +506,6 @@
                 <dependency>
                     <groupId>io.opentelemetry.javaagent</groupId>
                     <artifactId>opentelemetry-javaagent</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium.quarkus</groupId>
-                    <artifactId>debezium-quarkus-mariadb</artifactId>
-                    <version>${project.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium.quarkus</groupId>
-                    <artifactId>debezium-quarkus-mysql</artifactId>
-                    <version>${project.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium.quarkus</groupId>
-                    <artifactId>debezium-quarkus-postgres</artifactId>
-                    <version>${project.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium.quarkus</groupId>
-                    <artifactId>debezium-quarkus-mongodb</artifactId>
-                    <version>${project.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium.quarkus</groupId>
-                    <artifactId>debezium-quarkus-sqlserver</artifactId>
-                    <version>${project.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium.quarkus</groupId>
-                    <artifactId>debezium-quarkus-db2</artifactId>
-                    <version>${project.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium.quarkus</groupId>
-                    <artifactId>debezium-quarkus-oracle</artifactId>
-                    <version>${project.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>io.debezium</groupId>
@@ -477,6 +552,13 @@
                 <assembly.descriptor>server-distribution-prod</assembly.descriptor>
                 <storage.chronicle-queue.scope>compile</storage.chronicle-queue.scope>
                 <scripting.scope>compile</scripting.scope>
+                <connector.mariadb.scope>compile</connector.mariadb.scope>
+                <connector.mysql.scope>compile</connector.mysql.scope>
+                <connector.postgres.scope>compile</connector.postgres.scope>
+                <connector.mongodb.scope>compile</connector.mongodb.scope>
+                <connector.sqlserver.scope>compile</connector.sqlserver.scope>
+                <connector.oracle.scope>compile</connector.oracle.scope>
+                <connector.db2.scope>compile</connector.db2.scope>
             </properties>
             <dependencies>
                 <dependency>
@@ -486,41 +568,6 @@
                 <dependency>
                     <groupId>io.opentelemetry.javaagent</groupId>
                     <artifactId>opentelemetry-javaagent</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium.quarkus</groupId>
-                    <artifactId>debezium-quarkus-mysql</artifactId>
-                    <version>${project.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium.quarkus</groupId>
-                    <artifactId>debezium-quarkus-mariadb</artifactId>
-                    <version>${project.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium.quarkus</groupId>
-                    <artifactId>debezium-quarkus-postgres</artifactId>
-                    <version>${project.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium.quarkus</groupId>
-                    <artifactId>debezium-quarkus-mongodb</artifactId>
-                    <version>${project.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium.quarkus</groupId>
-                    <artifactId>debezium-quarkus-sqlserver</artifactId>
-                    <version>${project.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium.quarkus</groupId>
-                    <artifactId>debezium-quarkus-oracle</artifactId>
-                    <version>${project.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium.quarkus</groupId>
-                    <artifactId>debezium-quarkus-db2</artifactId>
-                    <version>${project.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>io.debezium</groupId>
