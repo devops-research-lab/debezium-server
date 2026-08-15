@@ -612,6 +612,9 @@
                     <name>!skipNonCore</name>
                 </property>
             </activation>
+            <properties>
+                <connector.db2.scope>compile</connector.db2.scope>
+            </properties>
             <dependencies>
                 <dependency>
                     <groupId>io.debezium</groupId>
@@ -831,11 +834,6 @@
                             <artifactId>logback-classic</artifactId>
                         </exclusion>
                     </exclusions>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium.quarkus</groupId>
-                    <artifactId>debezium-quarkus-db2</artifactId>
-                    <version>${project.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>io.debezium</groupId>
