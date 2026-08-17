@@ -36,6 +36,12 @@
         <sink.instructlab.scope>compile</sink.instructlab.scope>
         <sink.fluss.scope>compile</sink.fluss.scope>
         <sink.jdbc.scope>compile</sink.jdbc.scope>
+
+        <!-- Storage module dependency scopes - default to test -->
+        <storage.chronicle-queue.scope>test</storage.chronicle-queue.scope>
+
+        <!-- Scripting dependency scopes - default to test -->
+        <scripting.scope>test</scripting.scope>
     </properties>
 
     <dependencies>
@@ -145,6 +151,24 @@
             <groupId>io.debezium</groupId>
             <artifactId>debezium-server-jdbc</artifactId>
             <scope>${sink.jdbc.scope}</scope>
+        </dependency>
+
+        <!-- Storage module and scripting dependencies with property-controlled scopes -->
+        <dependency>
+            <groupId>io.debezium</groupId>
+            <artifactId>debezium-scripting</artifactId>
+            <scope>${scripting.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.debezium</groupId>
+            <artifactId>debezium-scripting-languages</artifactId>
+            <type>pom</type>
+            <scope>${scripting.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.debezium</groupId>
+            <artifactId>debezium-storage-chronicle-queue</artifactId>
+            <scope>${storage.chronicle-queue.scope}</scope>
         </dependency>
     </dependencies>
     <build>
@@ -340,11 +364,30 @@
             </properties>
         </profile>
 
+        <!-- Storage module profiles - override scope to compile -->
+        <profile>
+            <id>storage-chronicle-queue</id>
+            <properties>
+                <storage.chronicle-queue.scope>compile</storage.chronicle-queue.scope>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>scripting</id>
+            <properties>
+                <scripting.scope>compile</scripting.scope>
+            </properties>
+        </profile>
+
         <profile>
             <id>assembly</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
+            <properties>
+                <storage.chronicle-queue.scope>compile</storage.chronicle-queue.scope>
+                <scripting.scope>compile</scripting.scope>
+            </properties>
             <dependencies>
                 <dependency>
                     <groupId>io.prometheus.jmx</groupId>
@@ -388,19 +431,6 @@
                     <groupId>io.debezium.quarkus</groupId>
                     <artifactId>debezium-quarkus-oracle</artifactId>
                     <version>${project.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium</groupId>
-                    <artifactId>debezium-scripting</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium</groupId>
-                    <artifactId>debezium-scripting-languages</artifactId>
-                    <type>pom</type>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium</groupId>
-                    <artifactId>debezium-storage-chronicle-queue</artifactId>
                 </dependency>
                 <dependency>
                     <groupId>io.debezium</groupId>
@@ -445,6 +475,8 @@
             </activation>
             <properties>
                 <assembly.descriptor>server-distribution-prod</assembly.descriptor>
+                <storage.chronicle-queue.scope>compile</storage.chronicle-queue.scope>
+                <scripting.scope>compile</scripting.scope>
             </properties>
             <dependencies>
                 <dependency>
@@ -489,19 +521,6 @@
                     <groupId>io.debezium.quarkus</groupId>
                     <artifactId>debezium-quarkus-db2</artifactId>
                     <version>${project.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium</groupId>
-                    <artifactId>debezium-scripting</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium</groupId>
-                    <artifactId>debezium-scripting-languages</artifactId>
-                    <type>pom</type>
-                </dependency>
-                <dependency>
-                    <groupId>io.debezium</groupId>
-                    <artifactId>debezium-storage-chronicle-queue</artifactId>
                 </dependency>
                 <dependency>
                     <groupId>io.debezium</groupId>
